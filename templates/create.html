@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Create Server
+{% endblock %}
+
+{% block body %}
+		
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for msg in messages %}
+				<p> {{msg}} </p>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
+
+		<form method="POST">
+
+			<div class="">
+ 	            Name: <input type="text" name="name" required>
+	        </div>
+
+	        <div>
+	         	<input type="radio" name="server_type" value="public" id="public" checked>
+				<label for="public">Public</label><br>
+				<input type="radio" name="server_type" value="private" id="private">
+				<label for="private">Private</label><br>
+	        </div>
+
+
+	        <div class="password" id="password-fields" style="display:none"> 
+				Password: <input type="password" name="password" class="password" id="password"><br>
+				Confirm Password: <input type="password" name="password" class="password" id="confirm-password">
+			</div>
+
+			<div> <input type="submit" name="submit"> </div>
+
+		</form>
+
+		<br><p>
+			<a href="join">Join server?</a>
+		</p>
+
+	  	<script>
+	  		$("#private").click(function(){
+			  $("#password-fields").show(0);
+			  $(".password").attr("required","");
+			})
+			$("#public").click(function(){
+			  $("#password-fields").hide(0);
+			  $(".password").removeAttr("required");
+			})
+
+			var password = document.getElementById("password");
+			var confirm_password = document.getElementById("confirm-password");
+
+			function validatePassword(){
+			  if(password.value != confirm_password.value) {
+			    confirm_password.setCustomValidity("Passwords Don't Match");
+			  } else {
+			    confirm_password.setCustomValidity('');
+			  }
+			}
+
+			password.onchange = validatePassword;
+			confirm_password.onkeyup = validatePassword;
+	  	</script>
+
+
+{% endblock %}

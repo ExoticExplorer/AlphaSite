@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Join Server
+{% endblock %}
+
+{% block body %}
+		
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for msg in messages %}
+				<p> {{msg}} </p>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
+
+		<form method="POST">
+
+			<div>
+ 	            Name: <input type="text" name="name" required>
+	        </div>
+
+	        <div>
+	         	<input type="radio" name="server_type" value="public" id="public">
+				<label for="public">Public</label><br>
+				<input type="radio" name="server_type" value="private" id="private">
+				<label for="private">Private</label><br>
+	        </div>
+
+
+	        <div class="password" id="password" style="display:none"> 
+				Password: <input type="password" name="password" class="password"><br>
+			</div>
+
+			<div> <input type="submit" name="submit"> </div>
+
+		</form>
+
+		<br><p>
+			<a href="create">Create server?</a>
+		</p>
+
+		<script>
+			
+			$("#private").click(function(){
+			  $("#password").show(0);
+			  $(".password").attr("required","");
+			})
+			$("#public").click(function(){
+			  $("#password").hide(0);
+			  $(".password").removeAttr("required");
+			})
+
+		</script>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ page }}
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for msg in messages %}
+		<p> {{msg}} </p>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+
+<ul id="messages"></ul>
+<input type="text" id="mymessage"><button id="sendbutton">Send</button>
+
+<script>
+	
+	var socket = io.connect('http://127.0.0.1:5000');
+
+	socket.on('connect', function() {
+		socket.send('user connected');
+	});
+
+	socket.on('message', function(msg) {
+		$("#messages").append('<li>' + msg + '</li>')
+	});
+
+	$('#sendbutton').on('click', function() {
+		socket.send($('#mymessage').val())
+		$('#mymessage').val('')
+	});
+
+</script>
+
+{% endblock %}
